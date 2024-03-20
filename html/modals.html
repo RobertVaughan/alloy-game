@@ -1,0 +1,349 @@
+<!--############### MODALS FOR SHEET ###############-->  
+<div id="ccStep1" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="rw modal-header">
+            <div class="xxl-12">
+                <h2>Setting Details</h2>
+            </div>
+            <div class="xxl-12">
+                <span class="close">&times;</span>
+            </div>
+
+        </div>
+        <div class="rw modal-body">
+            <div class="l-15 xl-15 xxl-15 mitr justify">
+                <div class="rw">
+                    <div class="as-24">
+                        Welcome to the Gen-Cell System Character Creation tool. We will lead you step by step through the process of creating your character. The first step is to cselect which setting you will be playing in. We currently only have the Basic and Velvet Skies Settings available in the character creator but more will be added as they are released.<br><br>
+                        Please select the settings that you wish to use for your character:
+                        <br><br>
+                    </div>
+                </div>
+                <div class="rw">
+                    <div class="xxl-2">
+                        <input type="checkbox" id="settingBasic" onclick="setting_toggle('basic');">
+                    </div>
+                    <div class="xxl-22">Basic Setting</div>
+                </div>
+                <div class="rw" style="padding: 3px;"></div>
+                <div class="rw">
+                    <div class="xxl-2">
+                        <input type="checkbox" id="settingVS" onclick="setting_toggle('vs');">
+                    </div>
+                    <div class="xxl-22">Velvet Skies</div>
+                </div>
+            </div>
+            <div class="xxl-1"></div>
+            <div class="xxl-8">
+                <div class="rw">
+                    <div class="xxl-12">
+                        <div class="as-24">
+                            <b>Races</b>
+                        </div>
+                        <div class="as-24" id="SettingRaces">
+                        </div>
+                    </div>
+                    <div class="xxl-12">
+                        <div class="as-24">
+                            <b>Callings</b>
+                        </div>
+                        <div class="as-24" id="SettingCallings">
+                        </div>
+                    </div>
+                </div>
+                <div class="rw" style="padding: 8px;"></div>
+                <div class="rw">
+                    <div class="xxl-12">
+                        <div class="as-24">
+                            <b>1. Choose Race</b>
+                        </div>
+                        <div class="as-24" id="chooseRace">
+                            <select id="RaceSelector" onchange="populateRaceInfo(event);">
+                                <option value=""> </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="xxl-1"></div> -->
+                    <div class="xxl-12">
+                        <div class="as-24">
+                            <b>2. Choose Calling</b>
+                        </div>
+                        <div class="as-24" id="chooseCalling">
+                            <select id="CallingSelector" onchange="populateCallingInfo(event);">
+                                <option value=""> </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="xxl-1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="rw modal-footer">
+            <div class="xxl-21">
+                <h3>Character Creation Step 1/6</h3>
+            </div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep1-Next" onclick="modal('next',2)" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="ccStep2" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="rw modal-header">
+            <div class="xxl-12">
+                <h2>Character Details</h2>
+            </div>
+            <div class="xxl-12">
+                <span class="close">&times;</span>
+            </div>
+
+        </div>
+        <div class="rw modal-body">
+            <div class="as-24 mitr">
+                Welcome to the Gen-Cell System Character Creation tool. We will lead you step by step through the process of creating your character. The first step is to create the characters identity and appearance. None of these values will affect the mechanics of the sheet, they are simply for descriptive purposes.
+            </div>
+            <div class="as-24">
+                <div class="rw" style="padding: 10px;"></div>
+                <div class="rw">
+                    <div class="xxl-8 center detailBox-Large" id="characterName">
+                        <div class="rw">
+                            <div class="xxl-8" style="margin-left: -1px;">
+                                <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                            </div>
+                            <div class="xxl-16" style="padding-right: 3px;">
+                                <input id="charName" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterResidence">
+                        <div class="rw">
+                            <div class="xxl-8">
+                                <input class="detailLabel detailLarge" type="text" value="Residence" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-16" style="padding-right: 2px;">
+                                <input id="charResidence" class="detailText detailLarge" type="text" onchange="infoChange('Residence');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterDescription">
+                        <div class="rw">
+                            <div class="xxl-8">
+                                <input class="detailLabel detailLarge" type="text" value="Short Description" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-16" style="padding-right: 2px;">
+                                <input id="charDescription" class="detailText detailLarge" type="text" onchange="infoChange('Description');">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rw" style="padding: 3px;"></div>
+                <div class="rw">
+                    <div class="xxl-4 detailBox-Medium" id="characterHeight">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Height" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charHeight" onchange="infoChange('Height');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterWeight">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Weight" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charWeight" onchange="infoChange('Weight');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterHair">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Hair Color" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charHair" onchange="infoChange('Hair');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterEyes">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Eye Color" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charEyes" onchange="infoChange('Eyes');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterBuild">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Build" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charBuild" onchange="infoChange('Build');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterAge">
+                        <div class="rw">
+                            <div class="xxl-12">
+                                <input class="detailLabel detailMedium" type="text" value="Age" tabindex="-1" readonly>
+                            </div>
+                            <div class="xxl-12">
+                                <input class="detailText detailMedium" type="text" id="charAge" onchange="infoChange('Age');">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rw" style="padding: 10px;"></div>
+            </div>
+        </div>
+        <div class="rw modal-footer">
+            <div class="xxl-17">
+                <h3>Character Creation Step 1/6</h3>
+            </div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('back',2)">Back</button>
+            </div>
+            <div class="xxl-1"></div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('next',3)">Next</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal content -->
+<div id="ccStep3" class="modal">
+    <div class="modal-content">
+        <div class="rw modal-header">
+            <div class="xxl-12">
+                <h2>Character Breed</h2>
+            </div>
+            <div class="xxl-12">
+                <span class="close">&times;</span>
+            </div>
+
+        </div>
+        <div class="rw modal-body">
+            <div class="xxl-16 mitr justify">
+                In the Gen-Cell System we use the terms Race (the root <b>Natural</b> species that your character belongs to), Callings (the Awakened <b>Preturnatural</b> type that a Natural can become), and Breed (the <b>Supernatural</b> type that you can become forsaking all mortality)Characters are split between types based on their Mortality. <b>Naturals</b> are your regular mortal types, personified by Action Movie Heroes. <b>Preternaturals</b> are mortals who just have a little something extra, they are a branch of mortality and may be harder to kill but they can be killed. <b>Supernaturals</b> on the other hand are immortals who require specialized weapons or rituals to kill and are outside the scope of mortality.<br><br>
+            </div>
+            <div class="xxl-8">
+                <select id="RaceSelector" onchange="populateRaceInfo(event);">
+                    <option value=""><b>Step 1: Choose Race</b></option>
+                    <option value="Human" class="bodyColor">Human</option>
+                    <option value="Sidhe" class="bodyColor">Sidhe</option>
+                    <option value="Dwarf" class="bodyColor">Dwarf</option>
+                    <option value="Orc" class="bodyColor">Vampire</option>
+                    <option value="Werewolf" class="bodyColor">Werewolf</option>
+                </select>
+            </div>
+            <div class="xxl-16">
+                <div class="rw" style="padding: 10px;"></div>
+                <div class="rw">
+                    <div class="xxl-8 center detailBox-Large" id="characterName">
+                        <div class="xxl-8" style="margin-left: -1px;">
+                            <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charName" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterResidence">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Residence" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charResidence" class="detailText detailLarge" type="text" onchange="infoChange('Residence');">
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterDescription">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Short Description" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charDescription" class="detailText detailLarge" type="text" onchange="infoChange('Description');">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="rw" style="padding: 3px;"></div>
+                <div class="rw">
+                    <div class="xxl-4 detailBox-Medium" id="characterHeight">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Height" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHeight" onchange="infoChange('Height');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterWeight">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Weight" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charWeight" onchange="infoChange('Weight');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterHair">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Hair Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHair" onchange="infoChange('Hair');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterEyes">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Eye Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charEyes" onchange="infoChange('Eyes');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterBuild">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Build" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charBuild" onchange="infoChange('Build');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterAge">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Age" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charAge" onchange="infoChange('Age');">
+                        </div>
+                    </div>
+                </div>
+                <div class="rw" style="padding: 10px;"></div>
+            </div>
+            <div class="xxl-8"></div>
+        </div>
+        <div class="rw modal-footer">
+            <div class="xxl-17">
+                <h3>Character Creation Step 2/6</h3>
+            </div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('back',3)">Back</button>
+            </div>
+            <div class="xxl-1"></div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('next',4)">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Gen-Cell Basic Character Creator</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/jquery.sticky-kit.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="Paradox-Grid/paradox.js"></script>
+    <script src="Paradox-Grid/waves.js"></script>
+    <script src="js/charTemplate.js"></script>
+    <script src="js/config.js"></script>
+    <script type="text/javascript">
+
+        console.log(newCharacter);
+        
+        $(document).ready(function() {
+            //Function call
+            // var modal = document.getElementById("ccStep1");
+            // modal.style.display = "block";
+            ccInitialize();
+        });
+       
+
+        function hide(hideTarget) {
+            console.log(hideTarget);
+            $("#" + hideTarget).addClass('hidden');
+            $("#hide" + hideTarget).addClass('hidden');
+            $("#show" + hideTarget).removeClass('hidden');
+        }
+
+        function show(hideTarget) {
+            $("#" + hideTarget).removeClass('hidden');
+            $("#hide" + hideTarget).removeClass('hidden');
+            $("#show" + hideTarget).addClass('hidden');
+        }
+
+        $(function() {
+            $(".draggable").draggable();
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/cc-layout.css">
+    <link rel="stylesheet" type="text/css" href="Paradox-Grid/paradox-flex.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+<div id="ccStep3" class="modal">
+    <div class="modal-content">
+        <div class="rw modal-header">
+            <div class="xxl-12">
+                <h2>Character Breed</h2>
+            </div>
+            <div class="xxl-12">
+                <span class="close">&times;</span>
+            </div>
+
+        </div>
+        <div class="rw modal-body">
+            <div class="xxl-16 mitr justify">
+                In the Gen-Cell System we use the terms Race (the root <b>Natural</b> species that your character belongs to), Callings (the Awakened <b>Preturnatural</b> type that a Natural can become), and Breed (the <b>Supernatural</b> type that you can become forsaking all mortality)Characters are split between types based on their Mortality. <b>Naturals</b> are your regular mortal types, personified by Action Movie Heroes. <b>Preternaturals</b> are mortals who just have a little something extra, they are a branch of mortality and may be harder to kill but they can be killed. <b>Supernaturals</b> on the other hand are immortals who require specialized weapons or rituals to kill and are outside the scope of mortality.<br><br>
+            </div>
+            <div class="xxl-8">
+                <select id="RaceSelector" onchange="populateRaceInfo(event);">
+                    <option value=""><b>Step 1: Choose Race</b></option>
+                    <option value="Human" class="bodyColor">Human</option>
+                    <option value="Sidhe" class="bodyColor">Sidhe</option>
+                    <option value="Dwarf" class="bodyColor">Dwarf</option>
+                    <option value="Orc" class="bodyColor">Vampire</option>
+                    <option value="Werewolf" class="bodyColor">Werewolf</option>
+                </select>
+            </div>
+            <div class="xxl-16">
+                <div class="rw" style="padding: 10px;"></div>
+                <div class="rw">
+                    <div class="xxl-8 center detailBox-Large" id="characterName">
+                        <div class="xxl-8" style="margin-left: -1px;">
+                            <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charName" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterResidence">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Residence" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charResidence" class="detailText detailLarge" type="text" onchange="infoChange('Residence');">
+                        </div>
+                    </div>
+                    <div class="xxl-8 center detailBox-Large" id="characterDescription">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Short Description" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charDescription" class="detailText detailLarge" type="text" onchange="infoChange('Description');">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="rw" style="padding: 3px;"></div>
+                <div class="rw">
+                    <div class="xxl-4 detailBox-Medium" id="characterHeight">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Height" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHeight" onchange="infoChange('Height');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterWeight">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Weight" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charWeight" onchange="infoChange('Weight');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterHair">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Hair Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHair" onchange="infoChange('Hair');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterEyes">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Eye Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charEyes" onchange="infoChange('Eyes');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterBuild">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Build" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charBuild" onchange="infoChange('Build');">
+                        </div>
+                    </div>
+                    <div class="xxl-4 detailBox-Medium" id="characterAge">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Age" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charAge" onchange="infoChange('Age');">
+                        </div>
+                    </div>
+                </div>
+                <div class="rw" style="padding: 10px;"></div>
+            </div>
+            <div class="xxl-8"></div>
+        </div>
+        <div class="rw modal-footer">
+            <div class="xxl-17">
+                <h3>Character Creation Step 2/6</h3>
+            </div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('back',3)">Back</button>
+            </div>
+            <div class="xxl-1"></div>
+            <div class="xxl-3">
+                <button type="button" class="btn btn-primary" id="ccStep2-Next" onclick="modal('next',4)">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--############### CHARACTER SHEET ###############-->   
+<div id="main-container" style="border: 1px solid #888; margin: 0px auto;">
+    <div class="rw">
+        <div class="xs-24 md-8 lg-8 xxl-8 enter" id="characterName">
+            <div class="rw">
+                <div class="as-24">
+                    <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                </div>
+                <div class="as-24">
+                    <input id="charNameSheet" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                </div>
+            </div>
+        </div>
+        <div class="xs-24 md-8 lg-8 xxl-8 center" style="border: 1px solid #333; border-radius: 6px;">
+            <h1 id="pageTitle" class="mitr">Alloy System</h1>
+            <h2 id="breedTitle" class="mitr">Breed Character Sheet</h2>
+        </div>
+        <div class="xs-24 md-8 lg-8 xxl-8  center" id="playerName">
+            <div class="rw">
+                <div class="as-24">
+                    <input class="detailLabel detailLarge" type="text" value="Discord Username" readonly>
+                </div>
+                <div class="as-24">
+                    <input id="discordNameSheet" class="detailText detailLarge" type="text" onchange="infoChange('Player');">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rw p10">
+        <div class="xs-15 md-15 lg-15 xxl-15 mitr justify">
+            <div class="rw">
+                <div class="as-24">
+                    Welcome to the Gen-Cell System Character Creation tool. We will lead you step by step through the process of creating your character. The first step is to cselect which setting you will be playing in. We currently only have the Basic and Velvet Skies Settings available in the character creator but more will be added as they are released.<br><br>
+                    Please select the settings that you wish to use for your character:
+                    <br><br>
+                </div>
+            </div>
+            <div class="rw">
+                <div class="xs-2 md-2 lg-2 xxl-2">
+                    <input type="checkbox" id="settingBasic" onclick="setting_toggle('basic');">
+                </div>
+                <div class="xs-22 md-22 lg-22 xxl-22">Basic Setting</div>
+            </div>
+            <div class="rw" style="padding: 3px;"></div>
+            <div class="rw">
+                <div class="xs-2 md-2 lg-2 xxl-2">
+                    <input type="checkbox" id="settingVS" onclick="setting_toggle('vs');">
+                </div>
+                <div class="xs-22 md-22 lg-22 xxl-22">Velvet Skies</div>
+            </div>
+        </div>
+        <div class="xs-1 md-1 lg-1 xxl-1"></div>
+        <div class="xs-8 md-8 lg-8 xxl-8">
+            <div class="rw">
+                <div class="xs-12 lg-12 xxl-12">
+                    <div class="as-24">
+                        <b>Races</b>
+                    </div>
+                    <div class="as-24" id="SettingRaces">
+                    </div>
+                </div>
+                <div class="xs-12 lg-12 xxl-12">
+                    <div class="as-24">
+                        <b>Callings</b>
+                    </div>
+                    <div class="as-24" id="SettingCallings">
+                    </div>
+                </div>
+            </div>
+            <div class="rw" style="padding: 8px;"></div>
+            <div class="rw">
+                <div class="xs-12 md-12 lg-12 xxl-12">
+                    <div class="as-24">
+                        <b>1. Choose Race</b>
+                    </div>
+                    <div class="as-24" id="chooseRace">
+                        <select id="RaceSelector" onchange="populateRaceInfo(event);">
+                            <option value="">Choose Race</option>
+                        </select>
+                    </div>
+                    <div class="as-24 p5"></div>
+                    <div class="as-24" id="chooseAttribute">
+                        <select id="AttributeSelector" onchange="populateAttributes(event);" disabled>
+                            <option value="">Choose Attribute </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="xxl-1"></div> -->
+                <div class="xs-12 md-12 lg-12 xxl-12">
+                    <div class="as-24">
+                        <b>3. Choose Calling</b>
+                    </div>
+                    <div class="as-24" id="chooseCalling">
+                        <select id="CallingSelector" onchange="populateCallingInfo(event);">
+                            <option value="">Choose Calling</option>
+                        </select>
+                    </div>
+                    <div class="as-24 p5"></div>
+                    <div class="as-24">
+                        <b>4. Choose Occupation</b>
+                    </div>
+                    <div class="as-24" id="chooseOccupation">
+                        <select id="OccupationSelector" onchange="setOccupation(event);">
+                            <option value=" ">Choose Occupation</option>
+                            <option value="actor">Actor</option>
+                            <option value="animalhandler">Animal Handler</option>
+                            <option value="artist">Artist</option>
+                            <option value="athlete">Athlete</option>
+                            <option value="attorney">Attorney</option>
+                            <option value="boxer">Boxer</option>
+                            <option value="clergy">Clergy</option>
+                            <option value="craftsman">Craftsman</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="hunter">Hunter</option>
+                            <option value="investigator">Investigator</option>
+                            <option value="merchant">Merchant</option>
+                            <option value="mystic">Mysticism</option>
+                            <option value="scientist">Scientist</option>
+                            <option value="soldier">Soldier</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="xs-1 xxl-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="rw" style="display: none;">
+        <div class="xxl-1"></div>
+        <div class="xxl-22">
+            <div class="rw">
+                <div class="xxl-8 center detailBox-Large" id="characterName">
+                    <div class="rw">
+                        <div class="xxl-8" style="margin-left: -1px;">
+                            <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charNameSheet" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterBreed">
+                    <div class="rw">
+                        <div class="xxl-22">
+                            <select id="BreedSelector" onchange="populateBreedInfo(event);">
+                                <option value="">Choose Race</option>
+                                <option value="Mortal" class="bodyColor">Mortal</option>
+                                <option value="Fae" class="bodyColor">Fae</option>
+                                <option value="Construct" class="bodyColor">Construct</option>
+                                <option value="Vampire" class="bodyColor">Vampire</option>
+                                <option value="Werewolf" class="bodyColor">Werewolf</option>
+                            </select>
+                        </div>
+                        <div class="xxl-2" style="padding-left: 0px !important; padding-right: 0px !important;">
+                            <button style="font-size:16px" id="myBtn" ><i class="fa fa-check-circle"></i></button>
+                        </div>
+                    <!--<div class="xxl-24">
+                        <input id="charBreed" class="detailLabel detailLarge" type="text" value="Select Breed" style="text-align:center" readonly>
+                    </div>-->
+                    </div>
+                </div>
+                <div class="xxl-8 detailBox-Large" id="characterCalling">
+                    <div class="rw">
+                        <select id="CallingSelector" onchange="populateCallingInfo(event);">
+                            <option value="">Choose Calling</option>
+                            <option value="Mundane" class="bodyColor">Mundane</option>
+                            <option value="Disciple" class="bodyColor">Disciple</option>
+                            <option value="Magi" class="bodyColor">Magi</option>
+                            <option value="Psion" class="bodyColor">Psion</option>
+                            <option value="Shade" class="bodyColor">Shade</option>
+                        </select>
+                    </div>
+                    <!--<input class="detailLabel detailLarge" type="text" value="Player Name" readonly>-->
+                </div>
+            </div>
+            <div class="rw" style="padding: 2px !important;"></div>
+            <div class="rw">
+                <div class="xxl-8 center detailBox-Large" id="characterLeader" style="margin-left: -1px;">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input id="leaderBreed" class="detailLabel detailLarge" type="text" value="Breed Leader" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charLeaderSheet" class="detailText detailLarge" type="text" onchange="infoChange('Leader');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterOccupation">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Occupation" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charOccupationSheet" class="detailText detailLarge" type="text" onchange="infoChange('Occupation');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterResidence">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Residence" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charResidenceSheet" class="detailText detailLarge" type="text" onchange="infoChange('Residence');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rw" style="padding: 3px !important;"></div>
+            <div class="rw">
+                <div class="xxl-4 detailBox-Medium" id="characterHeight">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Height" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHeightSheet" onchange="infoChange('Height');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterWeight">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Weight" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charWeightSheet" onchange="infoChange('Weight');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterHair">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Hair Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHairSheet" onchange="infoChange('Hair');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterEyes">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Eye Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charEyesSheet" onchange="infoChange('Eyes');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterBuild">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Build" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charBuildSheet" onchange="infoChange('Build');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterAge">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Age" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charAgeSheet" onchange="infoChange('Age');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xxl-1"></div>
+    </div>
+    <div class="rw p10"></div>
+    <div class="rw p10">
+        <div class="xxl-11">
+            <div class="rw">
+                <div class="xs-13 as-13 center SectionTitle" style="border-top-left-radius: 9px; border-right: 0px;">Attributes</div>
+                <div class="xs-11 as-11 center SectionTitle" style="border-top-right-radius: 9px; border-left: 0px;">Aptitudes</div>
+            </div>
+            <div class="rw">
+                <div class="as-13 center" style="background: #ccc; border: 1px solid #333; border-right: 0px; border-top: 0px; border-bottom-left-radius: 9px;">
+                    <div class="rw p10">
+                        <div class="as-24 statCard" style="background: #a00;">
+                            <span class="cardTitle center">Physique</span><br>
+                            <div class="attributeCurrentLabel center" style="color: #a00;">Current</div>
+                            <div class="attributeMaxLabel center" style="color: #a00;">max</div>
+                            <div class="healthPoolLabel center" style="color: #a00;">body</div>
+                            <div class="actionPoolLabel center" style="color: #a00;">stamina</div>
+                            <div class="attModUp">
+                                <button id="physiqueUp" onclick="modStats('phy','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            </div>
+                            <div class="attModDown">
+                                <button id="physiqueDown" onclick="modStats('phy','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                            </div>
+                            <input type="text" id="physiqueValue" readonly>
+                            <input type="text" id="physiqueMax" readonly>
+                            <input type="text" id="bodyValue" readonly>
+                            <input type="text" id="staminaValue" readonly>
+                            <div class="a-24 advancementPips" >
+                                <input type="checkbox" id="phys1" value="phys1">
+                                <input type="checkbox" id="phys2" value="phys2">
+                                <input type="checkbox" id="phys3" value="phys3">
+                                <input type="checkbox" id="phys4" value="phys4">
+                                <input type="checkbox" id="phys5" value="phys5">
+                            </div>
+                            <div class="a-24 advancement" >Advancement Pips</div>
+                            <!-- <input type="text" id="bodyMax" readyonly>
+                            <input type="text" id="staminaMax" readyonly> -->
+                        </div>
+                        
+                    </div>
+                    <div class="rw p10">
+                        <div class="as-24 statCard" style="background: #1C75BC;">
+                            <span class="cardTitle center">Intellect</span><br>
+                            <div class="attributeCurrentLabel center" style="color: #1C75BC;">Current</div>
+                            <div class="attributeMaxLabel center" style="color: #1C75BC;">max</div>
+                            <div class="healthPoolLabel center" style="color: #1C75BC;">mind</div>
+                            <div class="actionPoolLabel center" style="color: #1C75BC;">fatigue</div>
+                            <div class="attModUp">
+                                <button id="intellectUp" onclick="modStats('int','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            </div>
+                            <div class="attModDown">
+                                <button id="intellectDown" onclick="modStats('int','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                            </div>
+                            <input type="text" id="intellectValue" readonly>
+                            <input type="text" id="intellectMax" readonly>
+                            <input type="text" id="mindValue" readonly>
+                            <input type="text" id="fatigueValue" readonly>
+                            <div class="a-24 advancementPips" >
+                                <input type="checkbox" id="int1" value="int1">
+                                <input type="checkbox" id="int2" value="int2">
+                                <input type="checkbox" id="int3" value="int3">
+                                <input type="checkbox" id="int4" value="int4">
+                                <input type="checkbox" id="int5" value="int5">
+                            </div>
+                            <div class="a-24 advancement" >Advancement Pips</div>
+                            <!-- <input type="text" id="bodyMax" readyonly>
+                            <input type="text" id="staminaMax" readyonly> -->
+                        </div>
+                    </div>
+                    <div class="rw p10">
+                        <div class="as-24 statCard" style="background: #292;">
+                            <span class="cardTitle center">Intellect</span><br>
+                            <div class="attributeCurrentLabel center" style="color: #292;">Current</div>
+                            <div class="attributeMaxLabel center" style="color: #292;">max</div>
+                            <div class="healthPoolLabel center" style="color: #292;">soul</div>
+                            <div class="actionPoolLabel center" style="color: #292;">vigor</div>
+                            <div class="attModUp">
+                                <button id="spiritUp" onclick="modStats('spi','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            </div>
+                            <div class="attModDown">
+                                <button id="spiritDown" onclick="modStats('spi','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                            </div>
+                            <input type="text" id="spiritValue" readonly>
+                            <input type="text" id="spiritMax" readonly>
+                            <input type="text" id="soulValue" readonly>
+                            <input type="text" id="vigorValue" readonly>
+                            <div class="a-24 advancementPips" >
+                                <input type="checkbox" id="spi1" value="spi1">
+                                <input type="checkbox" id="spi2" value="spi2">
+                                <input type="checkbox" id="spi3" value="spi3">
+                                <input type="checkbox" id="spi4" value="spi4">
+                                <input type="checkbox" id="spi5" value="spi5">
+                            </div>
+                            <div class="a-24 advancement" >Advancement Pips</div>
+                            <!-- <input type="text" id="bodyMax" readyonly>
+                            <input type="text" id="staminaMax" readyonly> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="as-11" style="background: #ccc; border: 1px solid #333; border-left: 0px; border-top: 0px; border-bottom-right-radius: 9px;"">
+                    <div class="rw p10">
+                        <div class="as-24 aptitudeCard">
+                            <div class="rw">
+                                <div class="as-24 aptitudeBar" style="background: #a00; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                                    Prowess <span style="font-size: 12px;">(Physique x 2)</span>
+                                    <input type="text" id="prowessValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #e89314;">
+                                    Awareness <span style="font-size: 12px;">(Physique + Intellect)</span>
+                                    <input type="text" id="awarenessValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #1C75BC;">
+                                    Reason <span style="font-size: 12px;">(Intellect * 2)</span>
+                                    <input type="text" id="reasonValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #1c37bc;">
+                                    Inspiration <span style="font-size: 12px;">(Intellect + Spirit)</span>
+                                    <input type="text" id="inspirationValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #292;">
+                                    Discipline <span style="font-size: 12px;">(Spirit * 2)</span>
+                                    <input type="text" id="disciplineValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #070; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                                    Charisma <span style="font-size: 12px;">(Spirit + Physique)</span>
+                                    <input type="text" id="charismaValue" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="as-24">
+                            <div class="rw p10">
+                                <div class="as-24 center DefensesTitle" style="margin-bottom: 10px;">Defenses</div>
+                                <div class="as-24 aptitudeBar" style="background: #a00; border-top-left-radius: 9px; border-top-right-radius: 9px;">
+                                    Evasion
+                                    <input type="text" id="evasionValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #1C75BC;">
+                                    Resolve
+                                    <input type="text" id="resolveValue" readonly>
+                                </div>
+                                <div class="as-24 aptitudeBar" style="background: #070; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px;">
+                                    Willpower
+                                    <input type="text" id="willpowerValue" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="as-24">
+                            <div class="rw p10">
+                                <div class="as-24 DefensesTitle center">Development Points</div>
+                                    <div class="rw devPoints">
+                                        <div class="as-24">
+                                            <span class="devPointsLabel">Attribute Points</span><br>
+                                            <input type="text" id="apValue" readonly>
+                                            <span class="devPointsLabel">Skill Points</span>
+                                            <input type="text" id="spValue" readonly>
+                                        </div>
+                                    </div>
+                                
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xxl-13">
+            <div class="rw" style="padding-left: 5px;">
+                <div class="as-24 center SectionTitle" style="border-top-left-radius: 9px; border-top-right-radius: 9px;">Skills</div>
+                <div class="as-24 p5" style="border-left: 1px solid #333; border-right: 1px solid #333; border-bottom: 1px solid #333; background: #ccc;">
+                    <div class="rw">
+                        <div class="as-1 center">APT</div>
+                        <div class="as-4 center">Skill Name</div>
+                        <div class="as-6 center">Specialties</div>
+                        <div class="as-5 center">Advancement PIPs</div>
+                        <div class="as-3 center">Level</div>
+                        <div class="as-2 center">APT</div>
+                        <div class="as-2 center">Total</div>
+                        <div class="as-1 center">OCC</div>
+                    </div>
+                </div>
+                <div class="as-24" style="border-left: 1px solid #333; border-right: 1px solid #333;">
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #a00; padding-top: 30px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Prowess</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText prowess">Athletics</div>
+                                <div class="as-24 skillText prowess">Melee Combat</div>
+                                <div class="as-24 skillText prowess">Survival</div>
+                                <div class="as-24 skillText prowess">Transportation</div>
+                                <div class="as-24 skillText prowess">Unarmed Combat</div>
+                                <div class="as-24 skillText" style="background: #700;">Casting</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="athleticsSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="meleeSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="surivalSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="transportationSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="unarmedSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="castingSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="athleticsPIP1">
+                                    <input type="checkbox" id="athleticsPIP2">
+                                    <input type="checkbox" id="athleticsPIP3">
+                                    <input type="checkbox" id="athleticsPIP4">
+                                    <input type="checkbox" id="athleticsPIP5">
+                                    <input type="checkbox" id="athleticsPIP6">
+                                    <input type="checkbox" id="athleticsPIP7">
+                                    <input type="checkbox" id="athleticsPIP8">
+                                    <input type="checkbox" id="athleticsPIP9">
+                                    <input type="checkbox" id="athleticsPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="meleePIP1">
+                                    <input type="checkbox" id="meleePIP2">
+                                    <input type="checkbox" id="meleePIP3">
+                                    <input type="checkbox" id="meleePIP4">
+                                    <input type="checkbox" id="meleePIP5">
+                                    <input type="checkbox" id="meleePIP6">
+                                    <input type="checkbox" id="meleePIP7">
+                                    <input type="checkbox" id="meleePIP8">
+                                    <input type="checkbox" id="meleePIP9">
+                                    <input type="checkbox" id="meleePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="survivalPIP1">
+                                    <input type="checkbox" id="survivalPIP2">
+                                    <input type="checkbox" id="survivalPIP3">
+                                    <input type="checkbox" id="survivalPIP4">
+                                    <input type="checkbox" id="survivalPIP5">
+                                    <input type="checkbox" id="survivalPIP6">
+                                    <input type="checkbox" id="survivalPIP7">
+                                    <input type="checkbox" id="survivalPIP8">
+                                    <input type="checkbox" id="survivalPIP9">
+                                    <input type="checkbox" id="survivalPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="transportationPIP1">
+                                    <input type="checkbox" id="transportationPIP2">
+                                    <input type="checkbox" id="transportationPIP3">
+                                    <input type="checkbox" id="transportationPIP4">
+                                    <input type="checkbox" id="transportationPIP5">
+                                    <input type="checkbox" id="transportationPIP6">
+                                    <input type="checkbox" id="transportationPIP7">
+                                    <input type="checkbox" id="transportationPIP8">
+                                    <input type="checkbox" id="transportationPIP9">
+                                    <input type="checkbox" id="transportationPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="unarmedPIP1">
+                                    <input type="checkbox" id="unarmedPIP2">
+                                    <input type="checkbox" id="unarmedPIP3">
+                                    <input type="checkbox" id="unarmedPIP4">
+                                    <input type="checkbox" id="unarmedPIP5">
+                                    <input type="checkbox" id="unarmedPIP6">
+                                    <input type="checkbox" id="unarmedPIP7">
+                                    <input type="checkbox" id="unarmedPIP8">
+                                    <input type="checkbox" id="unarmedPIP9">
+                                    <input type="checkbox" id="unarmedPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="castingPIP1">
+                                    <input type="checkbox" id="castingPIP2">
+                                    <input type="checkbox" id="castingPIP3">
+                                    <input type="checkbox" id="castingPIP4">
+                                    <input type="checkbox" id="castingPIP5">
+                                    <input type="checkbox" id="castingPIP6">
+                                    <input type="checkbox" id="castingPIP7">
+                                    <input type="checkbox" id="castingPIP8">
+                                    <input type="checkbox" id="castingPIP9">
+                                    <input type="checkbox" id="castingPIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button id="athleticsUp" onclick="modSkill('athletics','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="athleticsLevel" value="0">
+                                    <button id="athleticsDown" onclick="modSkill('athletics','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('melee','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="meleeLevel" value="0">
+                                    <button onclick="modSkill('melee','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('survival','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="survivalLevel" value="0">
+                                    <button onclick="modSkill('survival','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('transportation','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="transportationLevel" value="0">
+                                    <button onclick="modSkill('transportation','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('unarmed','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="unarmedLevel" value="0">
+                                    <button onclick="modSkill('unarmed','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('casting','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="castingLevel" value="0">
+                                    <button onclick="modSkill('casting','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="prowessApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="athleticsTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="meleeTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="survivalTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="transportationTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="unarmedTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="castingTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="athleticsOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="meleeOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="survivalOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="transportationOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="unarmedOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="castingOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="as-24" style="border-left: 1px solid #333; border-right: 1px solid #333;">
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #d80; padding-top: 20px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Awareness</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText awareness">Alertness</div>
+                                <div class="as-24 skillText awareness">Larceny</div>
+                                <div class="as-24 skillText awareness">Stealth</div>
+                                <div class="as-24 skillText awareness">Ranged Combat</div>
+                                <div class="as-24 skillText awareness">Tracking</div>
+                                <div class="as-24 skillText" style="background: rgb(202, 112, 2);">Evasion</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="alertnessSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="larcenySpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="stealthSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="rangedSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="trackingSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="evasionSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="alertnessPIP1">
+                                    <input type="checkbox" id="alertnessPIP2">
+                                    <input type="checkbox" id="alertnessPIP3">
+                                    <input type="checkbox" id="alertnessPIP4">
+                                    <input type="checkbox" id="alertnessPIP5">
+                                    <input type="checkbox" id="alertnessPIP6">
+                                    <input type="checkbox" id="alertnessPIP7">
+                                    <input type="checkbox" id="alertnessPIP8">
+                                    <input type="checkbox" id="alertnessPIP9">
+                                    <input type="checkbox" id="alertnessPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="larcenyPIP1">
+                                    <input type="checkbox" id="larcenyPIP2">
+                                    <input type="checkbox" id="larcenyPIP3">
+                                    <input type="checkbox" id="larcenyPIP4">
+                                    <input type="checkbox" id="larcenyPIP5">
+                                    <input type="checkbox" id="larcenyPIP6">
+                                    <input type="checkbox" id="larcenyPIP7">
+                                    <input type="checkbox" id="larcenyPIP8">
+                                    <input type="checkbox" id="larcenyPIP9">
+                                    <input type="checkbox" id="larcenyPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="stealthPIP1">
+                                    <input type="checkbox" id="stealthPIP2">
+                                    <input type="checkbox" id="stealthPIP3">
+                                    <input type="checkbox" id="stealthPIP4">
+                                    <input type="checkbox" id="stealthPIP5">
+                                    <input type="checkbox" id="stealthPIP6">
+                                    <input type="checkbox" id="stealthPIP7">
+                                    <input type="checkbox" id="stealthPIP8">
+                                    <input type="checkbox" id="stealthPIP9">
+                                    <input type="checkbox" id="stealthPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="rangedPIP1">
+                                    <input type="checkbox" id="rangedPIP2">
+                                    <input type="checkbox" id="rangedPIP3">
+                                    <input type="checkbox" id="rangedPIP4">
+                                    <input type="checkbox" id="rangedPIP5">
+                                    <input type="checkbox" id="rangedPIP6">
+                                    <input type="checkbox" id="rangedPIP7">
+                                    <input type="checkbox" id="rangedPIP8">
+                                    <input type="checkbox" id="rangedPIP9">
+                                    <input type="checkbox" id="rangedPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="trackingPIP1">
+                                    <input type="checkbox" id="trackingPIP2">
+                                    <input type="checkbox" id="trackingPIP3">
+                                    <input type="checkbox" id="trackingPIP4">
+                                    <input type="checkbox" id="trackingPIP5">
+                                    <input type="checkbox" id="trackingPIP6">
+                                    <input type="checkbox" id="trackingPIP7">
+                                    <input type="checkbox" id="trackingPIP8">
+                                    <input type="checkbox" id="trackingPIP9">
+                                    <input type="checkbox" id="trackingPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="evasionPIP1">
+                                    <input type="checkbox" id="evasionPIP2">
+                                    <input type="checkbox" id="evasionPIP3">
+                                    <input type="checkbox" id="evasionPIP4">
+                                    <input type="checkbox" id="evasionPIP5">
+                                    <input type="checkbox" id="evasionPIP6">
+                                    <input type="checkbox" id="evasionPIP7">
+                                    <input type="checkbox" id="evasionPIP8">
+                                    <input type="checkbox" id="evasionPIP9">
+                                    <input type="checkbox" id="evasionPIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('alertness','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="alertnessLevel" value="0">
+                                    <button onclick="modSkill('alertness','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('larceny','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="larcenyLevel" value="0">
+                                    <button onclick="modSkill('larceny','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('stealth','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="stealthLevel" value="0">
+                                    <button onclick="modSkill('stealth','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('ranged','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="rangedLevel" value="0">
+                                    <button onclick="modSkill('ranged','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('tracking','up');" value="0"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="trackingLevel" value="0">
+                                    <button onclick="modSkill('tracking','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('evasion','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="evasionLevel" value="0">
+                                    <button onclick="modSkill('evasion','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="awarenessApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="alertnessTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="larcenyTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="stealthTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="rangedTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="trackingTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="evasionTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="alertnessOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="larcenyOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="stealthOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="rangedOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="trackingOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="evasionOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="as-24" style="border-left: 1px solid #333; border-right: 1px solid #333;">
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #1C75BC; padding-top: 30px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Reason</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText reason">Academics</div>
+                                <div class="as-24 skillText reason">Analysis</div>
+                                <div class="as-24 skillText reason">Navigation</div>
+                                <div class="as-24 skillText reason">Research</div>
+                                <div class="as-24 skillText reason">Science</div>
+                                <div class="as-24 skillText" style="background: #56aef6;">Imprint</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="academicsSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="analysisSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="navigationSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="researchSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="scienceSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="imprintSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="academicsPIP1">
+                                    <input type="checkbox" id="academicsPIP2">
+                                    <input type="checkbox" id="academicsPIP3">
+                                    <input type="checkbox" id="academicsPIP4">
+                                    <input type="checkbox" id="academicsPIP5">
+                                    <input type="checkbox" id="academicsPIP6">
+                                    <input type="checkbox" id="academicsPIP7">
+                                    <input type="checkbox" id="academicsPIP8">
+                                    <input type="checkbox" id="academicsPIP9">
+                                    <input type="checkbox" id="academicsPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="analysisPIP1">
+                                    <input type="checkbox" id="analysisPIP2">
+                                    <input type="checkbox" id="analysisPIP3">
+                                    <input type="checkbox" id="analysisPIP4">
+                                    <input type="checkbox" id="analysisPIP5">
+                                    <input type="checkbox" id="analysisPIP6">
+                                    <input type="checkbox" id="analysisPIP7">
+                                    <input type="checkbox" id="analysisPIP8">
+                                    <input type="checkbox" id="analysisPIP9">
+                                    <input type="checkbox" id="analysisPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="navigationPIP1">
+                                    <input type="checkbox" id="navigationPIP2">
+                                    <input type="checkbox" id="navigationPIP3">
+                                    <input type="checkbox" id="navigationPIP4">
+                                    <input type="checkbox" id="navigationPIP5">
+                                    <input type="checkbox" id="navigationPIP6">
+                                    <input type="checkbox" id="navigationPIP7">
+                                    <input type="checkbox" id="navigationPIP8">
+                                    <input type="checkbox" id="navigationPIP9">
+                                    <input type="checkbox" id="navigationPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="researchPIP1">
+                                    <input type="checkbox" id="researchPIP2">
+                                    <input type="checkbox" id="researchPIP3">
+                                    <input type="checkbox" id="researchPIP4">
+                                    <input type="checkbox" id="researchPIP5">
+                                    <input type="checkbox" id="researchPIP6">
+                                    <input type="checkbox" id="researchPIP7">
+                                    <input type="checkbox" id="researchPIP8">
+                                    <input type="checkbox" id="researchPIP9">
+                                    <input type="checkbox" id="researchPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="sciencePIP1">
+                                    <input type="checkbox" id="sciencePIP2">
+                                    <input type="checkbox" id="sciencePIP3">
+                                    <input type="checkbox" id="sciencePIP4">
+                                    <input type="checkbox" id="sciencePIP5">
+                                    <input type="checkbox" id="sciencePIP6">
+                                    <input type="checkbox" id="sciencePIP7">
+                                    <input type="checkbox" id="sciencePIP8">
+                                    <input type="checkbox" id="sciencePIP9">
+                                    <input type="checkbox" id="sciencePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="imprintPIP1">
+                                    <input type="checkbox" id="imprintPIP2">
+                                    <input type="checkbox" id="imprintPIP3">
+                                    <input type="checkbox" id="imprintPIP4">
+                                    <input type="checkbox" id="imprintPIP5">
+                                    <input type="checkbox" id="imprintPIP6">
+                                    <input type="checkbox" id="imprintPIP7">
+                                    <input type="checkbox" id="imprintPIP8">
+                                    <input type="checkbox" id="imprintPIP9">
+                                    <input type="checkbox" id="imprintPIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('academics','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="academicsLevel" value="0">
+                                    <button onclick="modSkill('academics','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('analysis','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="analysisLevel" value="0">
+                                    <button onclick="modSkill('analysis','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('navigation','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="navigationLevel" value="0">
+                                    <button onclick="modSkill('navigation','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('research','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="researchLevel" value="0">
+                                    <button onclick="modSkill('research','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('science','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="scienceLevel" value="0">
+                                    <button onclick="modSkill('science','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('imprint','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="imprintLevel" value="0">
+                                    <button onclick="modSkill('imprint','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="reasonApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="academicsTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="analysisTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="navigationTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="researchTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="scienceTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="imprintTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="academicsOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="analysisOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="navigationOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="researchOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="scienceOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="imprintOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="as-24" style="border-left: 1px solid #333; border-right: 1px solid #333;">
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #1c37bc; padding-top: 21px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Inspiration</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText inspiration">Artistry</div>
+                                <div class="as-24 skillText inspiration">Craftsmanship</div>
+                                <div class="as-24 skillText inspiration">Disguise</div>
+                                <div class="as-24 skillText inspiration">Invention</div>
+                                <div class="as-24 skillText inspiration">Linguistics</div>
+                                <div class="as-24 skillText" style="background: #0e207b;">Resolve</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="artistrySpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="craftsmanshipSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="disguiseSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="inventionSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="linguisticsSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="resolveSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="artistryPIP1">
+                                    <input type="checkbox" id="artistryPIP2">
+                                    <input type="checkbox" id="artistryPIP3">
+                                    <input type="checkbox" id="artistryPIP4">
+                                    <input type="checkbox" id="artistryPIP5">
+                                    <input type="checkbox" id="artistryPIP6">
+                                    <input type="checkbox" id="artistryPIP7">
+                                    <input type="checkbox" id="artistryPIP8">
+                                    <input type="checkbox" id="artistryPIP9">
+                                    <input type="checkbox" id="artistryPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="craftsmanshipPIP1">
+                                    <input type="checkbox" id="craftsmanshipPIP2">
+                                    <input type="checkbox" id="craftsmanshipPIP3">
+                                    <input type="checkbox" id="craftsmanshipPIP4">
+                                    <input type="checkbox" id="craftsmanshipPIP5">
+                                    <input type="checkbox" id="craftsmanshipPIP6">
+                                    <input type="checkbox" id="craftsmanshipPIP7">
+                                    <input type="checkbox" id="craftsmanshipPIP8">
+                                    <input type="checkbox" id="craftsmanshipPIP9">
+                                    <input type="checkbox" id="craftsmanshipPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="disguisePIP1">
+                                    <input type="checkbox" id="disguisePIP2">
+                                    <input type="checkbox" id="disguisePIP3">
+                                    <input type="checkbox" id="disguisePIP4">
+                                    <input type="checkbox" id="disguisePIP5">
+                                    <input type="checkbox" id="disguisePIP6">
+                                    <input type="checkbox" id="disguisePIP7">
+                                    <input type="checkbox" id="disguisePIP8">
+                                    <input type="checkbox" id="disguisePIP9">
+                                    <input type="checkbox" id="disguisePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="inventionPIP1">
+                                    <input type="checkbox" id="inventionPIP2">
+                                    <input type="checkbox" id="inventionPIP3">
+                                    <input type="checkbox" id="inventionPIP4">
+                                    <input type="checkbox" id="inventionPIP5">
+                                    <input type="checkbox" id="inventionPIP6">
+                                    <input type="checkbox" id="inventionPIP7">
+                                    <input type="checkbox" id="inventionPIP8">
+                                    <input type="checkbox" id="inventionPIP9">
+                                    <input type="checkbox" id="inventionPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="linguisticsPIP1">
+                                    <input type="checkbox" id="linguisticsPIP2">
+                                    <input type="checkbox" id="linguisticsPIP3">
+                                    <input type="checkbox" id="linguisticsPIP4">
+                                    <input type="checkbox" id="linguisticsPIP5">
+                                    <input type="checkbox" id="linguisticsPIP6">
+                                    <input type="checkbox" id="linguisticsPIP7">
+                                    <input type="checkbox" id="linguisticsPIP8">
+                                    <input type="checkbox" id="linguisticsPIP9">
+                                    <input type="checkbox" id="linguisticsPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="resolvePIP1">
+                                    <input type="checkbox" id="resolvePIP2">
+                                    <input type="checkbox" id="resolvePIP3">
+                                    <input type="checkbox" id="resolvePIP4">
+                                    <input type="checkbox" id="resolvePIP5">
+                                    <input type="checkbox" id="resolvePIP6">
+                                    <input type="checkbox" id="resolvePIP7">
+                                    <input type="checkbox" id="resolvePIP8">
+                                    <input type="checkbox" id="resolvePIP9">
+                                    <input type="checkbox" id="resolvePIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('artistry','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="artistryLevel" value="0">
+                                    <button onclick="modSkill('artistry','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('craftsmanship','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="craftsmanshipLevel" value="0">
+                                    <button onclick="modSkill('craftsmanship','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('disguise','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="disguiseLevel" value="0">
+                                    <button onclick="modSkill('disguise','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('invention','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="inventionLevel" value="0">
+                                    <button onclick="modSkill('invention','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('linguistics','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="linguisticsLevel" value="0">
+                                    <button onclick="modSkill('linguistics','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('resolve','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="resolveLevel" value="0">
+                                    <button onclick="modSkill('resolve','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inspirationApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="artistryTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="craftsmanshipTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disguiseTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="inventionTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="linguisticsTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="resolveTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="artistryOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="craftsmanshipOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="disguiseOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="inventionOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="linguisticsOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="resolveOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #292; padding-top: 22px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Discipline</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText discipline">Animal Handling</div>
+                                <div class="as-24 skillText discipline">Instruction</div>
+                                <div class="as-24 skillText discipline">Lore</div>
+                                <div class="as-24 skillText discipline">Medicine</div>
+                                <div class="as-24 skillText discipline">Mysticism</div>
+                                <div class="as-24 skillText" style="background: #6b6;">Faith</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="animalhandlingSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="instructionSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="loreSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="medicineSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="mysticismSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="faithSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="animalhandlingPIP1">
+                                    <input type="checkbox" id="animalhandlingPIP2">
+                                    <input type="checkbox" id="animalhandlingPIP3">
+                                    <input type="checkbox" id="animalhandlingPIP4">
+                                    <input type="checkbox" id="animalhandlingPIP5">
+                                    <input type="checkbox" id="animalhandlingPIP6">
+                                    <input type="checkbox" id="animalhandlingPIP7">
+                                    <input type="checkbox" id="animalhandlingPIP8">
+                                    <input type="checkbox" id="animalhandlingPIP9">
+                                    <input type="checkbox" id="animalhandlingPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="instructionPIP1">
+                                    <input type="checkbox" id="instructionPIP2">
+                                    <input type="checkbox" id="instructionPIP3">
+                                    <input type="checkbox" id="instructionPIP4">
+                                    <input type="checkbox" id="instructionPIP5">
+                                    <input type="checkbox" id="instructionPIP6">
+                                    <input type="checkbox" id="instructionPIP7">
+                                    <input type="checkbox" id="instructionPIP8">
+                                    <input type="checkbox" id="instructionPIP9">
+                                    <input type="checkbox" id="instructionPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="lorePIP1">
+                                    <input type="checkbox" id="lorePIP2">
+                                    <input type="checkbox" id="lorePIP3">
+                                    <input type="checkbox" id="lorePIP4">
+                                    <input type="checkbox" id="lorePIP5">
+                                    <input type="checkbox" id="lorePIP6">
+                                    <input type="checkbox" id="lorePIP7">
+                                    <input type="checkbox" id="lorePIP8">
+                                    <input type="checkbox" id="lorePIP9">
+                                    <input type="checkbox" id="lorePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="medicinePIP1">
+                                    <input type="checkbox" id="medicinePIP2">
+                                    <input type="checkbox" id="medicinePIP3">
+                                    <input type="checkbox" id="medicinePIP4">
+                                    <input type="checkbox" id="medicinePIP5">
+                                    <input type="checkbox" id="medicinePIP6">
+                                    <input type="checkbox" id="medicinePIP7">
+                                    <input type="checkbox" id="medicinePIP8">
+                                    <input type="checkbox" id="medicinePIP9">
+                                    <input type="checkbox" id="medicinePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="mysticismPIP1">
+                                    <input type="checkbox" id="mysticismPIP2">
+                                    <input type="checkbox" id="mysticismPIP3">
+                                    <input type="checkbox" id="mysticismPIP4">
+                                    <input type="checkbox" id="mysticismPIP5">
+                                    <input type="checkbox" id="mysticismPIP6">
+                                    <input type="checkbox" id="mysticismPIP7">
+                                    <input type="checkbox" id="mysticismPIP8">
+                                    <input type="checkbox" id="mysticismPIP9">
+                                    <input type="checkbox" id="mysticismPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="faithPIP1">
+                                    <input type="checkbox" id="faithPIP2">
+                                    <input type="checkbox" id="faithPIP3">
+                                    <input type="checkbox" id="faithPIP4">
+                                    <input type="checkbox" id="faithPIP5">
+                                    <input type="checkbox" id="faithPIP6">
+                                    <input type="checkbox" id="faithPIP7">
+                                    <input type="checkbox" id="faithPIP8">
+                                    <input type="checkbox" id="faithPIP9">
+                                    <input type="checkbox" id="faithPIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('animalhandling','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="animalhandlingLevel" value="0">
+                                    <button onclick="modSkill('animalhandling','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('instruction','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="instructionLevel" value="0">
+                                    <button onclick="modSkill('instruction','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('lore','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="loreLevel" value="0">
+                                    <button onclick="modSkill('lore','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('medicine','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="medicineLevel" value="0">
+                                    <button onclick="modSkill('medicine','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('mysticism','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="mysticismLevel" value="0">
+                                    <button onclick="modSkill('mysticism','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('faith','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="faithLevel" value="0">
+                                    <button onclick="modSkill('faith','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="disciplineApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="animalhandlingTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="instructionTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="loreTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="medicineTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="mysticismTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="faithTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="animalhandlingOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="instructionOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="loreOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="medicineOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="mysticismOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="faithOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="as-1 center skillApt" style="background: #070; padding-top: 22px;"><span style="writing-mode: tb-rl;transform: rotate(-180deg);">Discipline</span></div>
+                        <div class="as-4">
+                            <div class="rw">
+                                <div class="as-24 skillText charisma">Empathy</div>
+                                <div class="as-24 skillText charisma">Etiquette</div>
+                                <div class="as-24 skillText charisma">Leadership</div>
+                                <div class="as-24 skillText charisma">Manipulation</div>
+                                <div class="as-24 skillText charisma">Performance</div>
+                                <div class="as-24 skillText" style="background: #050;">Willpower</div>
+                            </div>
+                        </div>
+                        <div class="as-6">
+                            <div class="rw">
+                                <div class="as-24"><input class="skillSpec" id="empathySpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="etiquetteSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="leadershipSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="manipulationSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="performanceSpec"></div>
+                                <div class="as-24"><input class="skillSpec" id="willpowerSpec"></div>
+                            </div>
+                        </div>
+                        <div class="as-5">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs" style="">
+                                    <input type="checkbox" id="empathyPIP1">
+                                    <input type="checkbox" id="empathyPIP2">
+                                    <input type="checkbox" id="empathyPIP3">
+                                    <input type="checkbox" id="empathyPIP4">
+                                    <input type="checkbox" id="empathyPIP5">
+                                    <input type="checkbox" id="empathyPIP6">
+                                    <input type="checkbox" id="empathyPIP7">
+                                    <input type="checkbox" id="empathyPIP8">
+                                    <input type="checkbox" id="empathyPIP9">
+                                    <input type="checkbox" id="empathyPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="etiquettePIP1">
+                                    <input type="checkbox" id="etiquettePIP2">
+                                    <input type="checkbox" id="etiquettePIP3">
+                                    <input type="checkbox" id="etiquettePIP4">
+                                    <input type="checkbox" id="etiquettePIP5">
+                                    <input type="checkbox" id="etiquettePIP6">
+                                    <input type="checkbox" id="etiquettePIP7">
+                                    <input type="checkbox" id="etiquettePIP8">
+                                    <input type="checkbox" id="etiquettePIP9">
+                                    <input type="checkbox" id="etiquettePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="leadershipPIP1">
+                                    <input type="checkbox" id="leadershipPIP2">
+                                    <input type="checkbox" id="leadershipPIP3">
+                                    <input type="checkbox" id="leadershipPIP4">
+                                    <input type="checkbox" id="leadershipPIP5">
+                                    <input type="checkbox" id="leadershipPIP6">
+                                    <input type="checkbox" id="leadershipPIP7">
+                                    <input type="checkbox" id="leadershipPIP8">
+                                    <input type="checkbox" id="leadershipPIP9">
+                                    <input type="checkbox" id="leadershipPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="manipulationPIP1">
+                                    <input type="checkbox" id="manipulationPIP2">
+                                    <input type="checkbox" id="manipulationPIP3">
+                                    <input type="checkbox" id="manipulationPIP4">
+                                    <input type="checkbox" id="manipulationPIP5">
+                                    <input type="checkbox" id="manipulationPIP6">
+                                    <input type="checkbox" id="manipulationPIP7">
+                                    <input type="checkbox" id="manipulationPIP8">
+                                    <input type="checkbox" id="manipulationPIP9">
+                                    <input type="checkbox" id="manipulationPIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="performancePIP1">
+                                    <input type="checkbox" id="performancePIP2">
+                                    <input type="checkbox" id="performancePIP3">
+                                    <input type="checkbox" id="performancePIP4">
+                                    <input type="checkbox" id="performancePIP5">
+                                    <input type="checkbox" id="performancePIP6">
+                                    <input type="checkbox" id="performancePIP7">
+                                    <input type="checkbox" id="performancePIP8">
+                                    <input type="checkbox" id="performancePIP9">
+                                    <input type="checkbox" id="performancePIP10">
+                                </div>
+                                <div class="as-24 center skillPIPs">
+                                    <input type="checkbox" id="willpowerPIP1">
+                                    <input type="checkbox" id="willpowerPIP2">
+                                    <input type="checkbox" id="willpowerPIP3">
+                                    <input type="checkbox" id="willpowerPIP4">
+                                    <input type="checkbox" id="willpowerPIP5">
+                                    <input type="checkbox" id="willpowerPIP6">
+                                    <input type="checkbox" id="willpowerPIP7">
+                                    <input type="checkbox" id="willpowerPIP8">
+                                    <input type="checkbox" id="willpowerPIP9">
+                                    <input type="checkbox" id="willpowerPIP10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-3">
+                            <div class="rw">
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('empathy','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="empathyLevel" value="0">
+                                    <button onclick="modSkill('empathy','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('etiquette','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="etiquetteLevel" value="0">
+                                    <button onclick="modSkill('etiquette','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('leadership','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="leadershipLevel" value="0">
+                                    <button onclick="modSkill('leadership','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('manipulation','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="manipulationLevel" value="0">
+                                    <button onclick="modSkill('manipulation','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('performance','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="performanceLevel" value="0">
+                                    <button onclick="modSkill('performance','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                                <div class="as-24 center">
+                                    <button onclick="modSkill('willpower','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                                    <input class="skillInput" id="willpowerLevel" value="0">
+                                    <button onclick="modSkill('willpower','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="charismaApt" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-2">
+                            <div class="rw">
+                                <div class="as-24 center"><input id="empathyTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="etiquetteTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="leadershipTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="manipulationTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="performanceTotal" class="skillInput2"></div>
+                                <div class="as-24 center"><input id="willpowerTotal" class="skillInput2"></div>
+                            </div>
+                        </div>
+                        <div class="as-1">
+                            <div class="rw">
+                                <div class="as-24 center skillPIPs"><input id="empathyOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="etiquetteOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="leadershipOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="manipulationOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="performanceOcc" type="checkbox"></div>
+                                <div class="as-24 center skillPIPs"><input id="willpowerOcc" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="as-24" style="padding-bottom: 2px; border-left: 1px solid #333; border-right: 1px solid #333; border-bottom: 1px solid #333;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="rw">
+        <div class="xxl-1"></div>
+        <div class="xxl-22">
+        </div>
+        <div class="xxl-1 center"></div>
+    </div>
+    <div class="rw" style="padding: 5px !important;"></div>
+</div>
+</body>
+</html>

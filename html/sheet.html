@@ -1,0 +1,250 @@
+<!--############### CHARACTER SHEET ###############-->   
+<div id="main-container" style="border: 1px solid #888; width: 1280px; margin: 10px auto; padding: 10px;">
+    <div class="rw">
+        <div class="xxl-24 center">
+            <h1 id="pageTitle" class="mitr">gen-gell basic character creator</h1>
+            <h2 id="breedTitle" class="mitr">Breed Character Sheet</h2>
+        </div>
+    </div>
+    <div class="rw">
+        <div class="xxl-1"></div>
+        <div class="xxl-22">
+            <div class="rw">
+                <div class="xxl-8 center detailBox-Large" id="characterName">
+                    <div class="rw">
+                        <div class="xxl-8" style="margin-left: -1px;">
+                            <input class="detailLabel detailLarge" type="text" value="Character Name" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charNameSheet" class="detailText detailLarge" type="text" onchange="infoChange('Name');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterBreed">
+                    <div class="rw">
+                        <div class="xxl-22">
+                            <select id="BreedSelector" onchange="populateBreedInfo(event);">
+                                <option value="">Choose Breed</option>
+                                <option value="Mortal" class="bodyColor">Mortal</option>
+                                <option value="Fae" class="bodyColor">Fae</option>
+                                <option value="Construct" class="bodyColor">Construct</option>
+                                <option value="Vampire" class="bodyColor">Vampire</option>
+                                <option value="Werewolf" class="bodyColor">Werewolf</option>
+                            </select>
+                        </div>
+                        <div class="xxl-2" style="padding-left: 0px !important; padding-right: 0px !important;">
+                            <button style="font-size:16px" id="myBtn" ><i class="fa fa-check-circle"></i></button>
+                        </div>
+                    <!--<div class="xxl-24">
+                        <input id="charBreed" class="detailLabel detailLarge" type="text" value="Select Breed" style="text-align:center" readonly>
+                    </div>-->
+                    </div>
+                </div>
+                <div class="xxl-8 detailBox-Large" id="characterCalling">
+                    <div class="rw">
+                        <select id="CallingSelector" onchange="populateCallingInfo(event);">
+                            <option value="">Choose Calling</option>
+                            <option value="Mundane" class="bodyColor">Mundane</option>
+                            <option value="Disciple" class="bodyColor">Disciple</option>
+                            <option value="Magi" class="bodyColor">Magi</option>
+                            <option value="Psion" class="bodyColor">Psion</option>
+                            <option value="Shade" class="bodyColor">Shade</option>
+                        </select>
+                    </div>
+                    <!--<input class="detailLabel detailLarge" type="text" value="Player Name" readonly>-->
+                </div>
+            </div>
+            <div class="rw" style="padding: 2px !important;"></div>
+            <div class="rw">
+                <div class="xxl-8 center detailBox-Large" id="characterLeader" style="margin-left: -1px;">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input id="leaderBreed" class="detailLabel detailLarge" type="text" value="Breed Leader" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 3px;">
+                            <input id="charLeaderSheet" class="detailText detailLarge" type="text" onchange="infoChange('Leader');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterOccupation">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Occupation" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charOccupationSheet" class="detailText detailLarge" type="text" onchange="infoChange('Occupation');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-8 center detailBox-Large" id="characterResidence">
+                    <div class="rw">
+                        <div class="xxl-8">
+                            <input class="detailLabel detailLarge" type="text" value="Residence" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-16" style="padding-right: 2px;">
+                            <input id="charResidenceSheet" class="detailText detailLarge" type="text" onchange="infoChange('Residence');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rw" style="padding: 3px !important;"></div>
+            <div class="rw">
+                <div class="xxl-4 detailBox-Medium" id="characterHeight">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Height" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHeightSheet" onchange="infoChange('Height');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterWeight">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Weight" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charWeightSheet" onchange="infoChange('Weight');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterHair">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Hair Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charHairSheet" onchange="infoChange('Hair');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterEyes">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Eye Color" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charEyesSheet" onchange="infoChange('Eyes');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterBuild">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Build" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charBuildSheet" onchange="infoChange('Build');">
+                        </div>
+                    </div>
+                </div>
+                <div class="xxl-4 detailBox-Medium" id="characterAge">
+                    <div class="rw">
+                        <div class="xxl-12">
+                            <input class="detailLabel detailMedium" type="text" value="Age" tabindex="-1" readonly>
+                        </div>
+                        <div class="xxl-12">
+                            <input class="detailText detailMedium" type="text" id="charAgeSheet" onchange="infoChange('Age');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xxl-1"></div>
+    </div>
+    <div class="rw" style="padding: 7px !important;"></div>
+    <div class="rw">
+        <div class="xxl-1"></div>
+        <div class="xxl-22 center SectionTitle">Attributes</div>
+        <div class="xxl-1"></div>
+    </div>
+    <div class="rw">
+        <div class="xxl-1"></div>
+        <div class="xxl-22">
+            <div class="rw" style="border: 1px solid #888; margin: 0px auto; width: 100%;padding-top: 10px;padding-bottom: 10px;">
+                <div class="xxl-8 center" id="characterPhysique">
+                    <div class="rw">
+                        <div class="xxl-8"></div>
+                        <div class="xxl-5 center">
+                            <span class="PhysiqueTitle" style="margin-left: -13px;">Physique</span>
+                        </div>
+                        <div class="xxl-3 left"></div>
+                        <div class="xxl-3 center">
+                            <span class="BodyTitle" style="margin-left: -13px;">Body</span>
+                        </div>
+                        <div class="xxl-5"></div>
+                    </div>
+                    <div class="rw">
+                        <div class="xxl-8"></div>
+                        <div class="xxl-5 center">
+                            <input type="text" id="physiqueValue" readyonly>
+                        </div>
+                        <div class="xxl-1 left">
+                            <button style="font-size:24px" id="physiqueUp" onclick="modStats('phy','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            <button style="font-size:24px" id="physiqueDown" onclick="modStats('phy','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                        </div>
+                        <div class="xxl-2 left"></div>
+                        <div class="xxl-3 center">
+                            <input type="text" id="bodyValue" readyonly>
+                        </div>
+                        <div class="xxl-5"></div>
+                    </div>
+                </div>
+                <div class="xxl-8 center" id="characterIntellect">
+                    <div class="rw">
+                        <div class="xxl-24 center">
+                            <span class="IntellectTitle" style="margin-left: -13px;">Intellect</span>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="xxl-8"></div>
+                        <div class="xxl-5 center">
+                            <input type="text" id="intellectValue" readyonly>
+                        </div>
+                        <div class="xxl-1 left">
+                            <button style="font-size:24px" id="intellectUp" onclick="modStats('int','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            <button style="font-size:24px" id="intellectDown" onclick="modStats('int','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                        </div>
+                        <div class="xxl-2 left"></div>
+                        <div class="xxl-3 center">
+                            <input type="text" id="mindValue" readyonly>
+                        </div>
+                        <div class="xxl-5"></div>
+                    </div>
+                </div>
+                <div class="xxl-8 center" id="characterSpirit">
+                    <div class="rw">
+                        <div class="xxl-24 center">
+                            <span class="SpiritTitle" style="margin-left: -13px;">Spirit</span>
+                        </div>
+                    </div>
+                    <div class="rw">
+                        <div class="xxl-8"></div>
+                        <div class="xxl-5 center">
+                            <input type="text" id="spiritValue" readyonly>
+                        </div>
+                        <div class="xxl-1">
+                            <button style="font-size:24px" id="spiritUp" onclick="modStats('spi','up');"><i class="fa fa-chevron-circle-up"></i></button>
+                            <button style="font-size:24px" id="spiritDown" onclick="modStats('spi','down');"><i class="fa fa-chevron-circle-down"></i></button>
+                        </div>
+                        <div class="xxl-2 left"></div>
+                        <div class="xxl-3 center">
+                            <input type="text" id="soulValue" readyonly>
+                        </div>
+                        <div class="xxl-5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xxl-1 center">
+            <div class="rw">
+                <div class="xxl-24 center" style="padding-top: 15px;">
+                    AP's<br>
+                    <input type="text" id="apValue" readyonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rw" style="padding: 5px !important;"></div>
+</div>

@@ -1,0 +1,6 @@
+<?php
+include('includes/functions.php');
+display_head();
+display_body('sheet');
+display_foot();
+?>
